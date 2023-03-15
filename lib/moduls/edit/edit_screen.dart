@@ -27,8 +27,7 @@ class _EditScreenState extends State<EditScreen> {
   @override
   Widget build(BuildContext context) {
     dynamic argumentData = Get.arguments;
-
-
+    
     if(argumentData  != null){
       if(argumentData [0]['titleBar'].toString().toLowerCase().contains("view")){
         noteController.hideButtonCheck();
@@ -42,8 +41,6 @@ class _EditScreenState extends State<EditScreen> {
     }else{
 
     }
-
-
 
     return Scaffold(
       appBar: AppBar(
