@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:map_exam/controllers/auth_controller.dart';
+import 'package:map_exam/controllers/note_controller.dart';
+import 'package:map_exam/services/database_service.dart';
 
 class EditScreen extends StatefulWidget {
-  static Route route() => MaterialPageRoute(builder: (_) => const EditScreen());
+
 
   const EditScreen({Key? key}) : super(key: key);
 
@@ -10,62 +14,124 @@ class EditScreen extends StatefulWidget {
 }
 
 class _EditScreenState extends State<EditScreen> {
-  final _titleController = TextEditingController();
-  final _descriptionController = TextEditingController();
+
+  TextEditingController titleController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController() ;
+  late String idContent;
+
+  AuthController authController = AuthController.instance;
+  NoteController noteController = NoteController.instance;
+
+
 
   @override
   Widget build(BuildContext context) {
+    dynamic argumentData = Get.arguments;
+
+
+    if(argumentData  != null){
+      if(argumentData [0]['titleBar'].toString().toLowerCase().contains("view")){
+        noteController.hideButtonCheck();
+      }else{
+        noteController.showButtonCheck();
+      }
+
+      idContent = argumentData [1]['contentId'];
+      titleController = TextEditingController(text: argumentData [2]['contentTitle']);
+      descriptionController = TextEditingController(text: argumentData [3]['contentDesc']);
+    }else{
+
+    }
+
+
+
     return Scaffold(
       appBar: AppBar(
         leading: Container(),
         centerTitle: true,
-        title: const Text('App Bar Title'),
+        title: Text(argumentData[0]['titleBar'].toString()),
         actions: [
-          IconButton(
-              icon: const Icon(
-                Icons.check_circle,
-                size: 30,
-              ),
-              onPressed: () {}),
+
+          Obx(() => Visibility(
+            visible: noteController.isEditMode.value ,
+            child:IconButton(
+                icon: const Icon(
+                  Icons.check_circle,
+                  size: 30,
+                ),
+                onPressed: () {
+                  if (titleController.text  != '' && descriptionController.text != '') {
+                    if(argumentData[0]['titleBar'].toString().toLowerCase().contains("add")){
+                      DatabaseService().addNote(titleController.text.trim(),descriptionController.text.trim(),
+                          authController.user!.uid);
+                      titleController!.clear();
+                      descriptionController!.clear();
+
+                      Get.back();
+
+                    }else if(argumentData[0]['titleBar'].toString().toLowerCase().contains("edit")){
+                      DatabaseService().updateNote(
+                          titleController.text.trim(),
+                          descriptionController.text.trim(),
+                          authController.user!.uid,
+                          idContent
+                      );
+                      Get.back();
+                    }
+                  }
+                }),
+          )
+          ),
+
           IconButton(
               icon: const Icon(
                 Icons.cancel_sharp,
                 size: 30,
               ),
-              onPressed: () {}),
+              onPressed: () {
+                Get.back();
+              }),
         ],
       ),
-      body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-        child: Column(
-          children: [
-            TextFormField(
-              controller: _titleController,
-              initialValue: null,
-              enabled: true,
-              decoration: const InputDecoration(
-                hintText: 'Type the title here',
-              ),
-              onChanged: (value) {},
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            Expanded(
-              child: TextFormField(
-                  controller: _descriptionController,
-                  enabled: true,
-                  initialValue: null,
-                  maxLines: null,
-                  expands: true,
-                  decoration: const InputDecoration(
-                    hintText: 'Type the description',
+      body: GetBuilder<NoteController>(
+          init: NoteController(),
+          builder: (contex) {
+            return Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: Column(
+                children: [
+                  TextFormField(
+                    controller: titleController,
+                    enabled: noteController.isEditMode.value,
+                    decoration: const InputDecoration(
+                      hintText: 'Type the title here',
+                    ),
+                    onChanged: (value) {},
                   ),
-                  onChanged: (value) {}),
-            ),
-          ],
-        ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Expanded(
+                    child: TextFormField(
+                        controller: descriptionController,
+                        enabled: noteController.isEditMode.value,
+                        maxLines: null,
+                        expands: true,
+                        decoration: const InputDecoration(
+                          hintText: 'Type the description',
+                        ),
+                        onChanged: (value) {
+                          print("val "+value);
+                        }),
+                  ),
+                ],
+              ),
+            );
+          }
       ),
+
+
+
     );
   }
 }

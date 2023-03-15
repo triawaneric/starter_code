@@ -11,6 +11,7 @@ class NoteController extends GetxController {
 
   RxBool isVisibleSubtitle = true.obs;
   RxBool isVisibleAction = false.obs;
+  RxBool isEditMode = false.obs;
   RxInt selectedIdx = (-1).obs;
 
   void showSubtitle() {
@@ -29,6 +30,15 @@ class NoteController extends GetxController {
     isVisibleAction.value = false;
     selectedIdx.value = -1;
 
+  }
+
+  //Show hide button check edit page
+  void showButtonCheck() {
+    isEditMode.value = true;
+  }
+
+  void hideButtonCheck() {
+    isEditMode.value = false;
   }
 
 

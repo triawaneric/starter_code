@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:map_exam/controllers/auth_controller.dart';
 import 'package:map_exam/controllers/note_controller.dart';
 import 'package:map_exam/controllers/user_controller.dart';
+import 'package:map_exam/moduls/edit/edit_screen.dart';
 import 'package:map_exam/services/database_service.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -48,6 +49,16 @@ class HomeScreen extends StatelessWidget {
                       IconButton(
                         icon: const Icon(Icons.edit, color: Colors.blue),
                         onPressed: () {
+                          Get.to(
+                            const EditScreen(),
+                            arguments: [
+                              {'titleBar':'Edit Note'},
+                              {'contentId':'${noteController.noteList.value[index].id}',},
+                              {'contentTitle':'${noteController.noteList.value[index].title}',},
+                              {'contentDesc':'${noteController.noteList.value[index].content}',}
+                            ],
+                            transition: Transition.downToUp,
+                          );
                         },
                       ),
                       IconButton(
@@ -73,7 +84,17 @@ class HomeScreen extends StatelessWidget {
                     child: Text('${noteController.noteList.value[index].content}')
                   ),
                 ),
-                onTap: () {},
+                onTap: () {
+                  Get.to(const EditScreen(),
+                    arguments: [
+                      {'titleBar':'View Mode'},
+                      {'contentId':'${noteController.noteList.value[index].id}',},
+                      {'contentTitle':'${noteController.noteList.value[index].title}',},
+                      {'contentDesc':'${noteController.noteList.value[index].content}',}
+                    ],
+                    transition: Transition.downToUp,
+                  );
+                },
                 onLongPress: () {
                   if(noteController.isVisibleAction.isFalse){
                     noteController.showContainerByIndex(index);
@@ -112,7 +133,17 @@ class HomeScreen extends StatelessWidget {
             heroTag: UniqueKey(),
             child: const Icon(Icons.add),
             tooltip: 'Add a new note',
-            onPressed: () {},
+            onPressed: () {
+              Get.to(const EditScreen(),
+                arguments: [
+                  {'titleBar':'Add New Note'},
+                  {'contentId':''},
+                  {'contentTitle':''},
+                  {'contentDesc':''}
+                ],
+                transition: Transition.downToUp,
+              );
+            },
           ),
         ],
       ),
