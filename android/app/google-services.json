@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "471954217313",
+    "project_id": "myfirst-1386c",
+    "storage_bucket": "myfirst-1386c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:471954217313:android:4d1c0a8a3c2fcb99b78d20",
+        "android_client_info": {
+          "package_name": "com.erictriawan.myfirst"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "471954217313-1jbhk3ihnetf46kurv2goj5b15v4djb9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvz3APsycZ9i9BwBr-dq49o5yTAoxPY8k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "471954217313-1jbhk3ihnetf46kurv2goj5b15v4djb9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "471954217313-673ms41c1kfmrri49bp9lv2bjbndd33n.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.erictriawan.myfirst"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
