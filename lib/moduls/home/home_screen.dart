@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:map_exam/controllers/auth_controller.dart';
 import 'package:map_exam/controllers/note_controller.dart';
 import 'package:map_exam/controllers/user_controller.dart';
+import 'package:map_exam/services/database_service.dart';
 
 class HomeScreen extends StatelessWidget {
   static Route route() => MaterialPageRoute(builder: (_) => HomeScreen());
@@ -55,6 +56,9 @@ class HomeScreen extends StatelessWidget {
                           color: Colors.blue,
                         ),
                         onPressed: () {
+                          DatabaseService().deleteData(
+                              noteController.noteList.value[index].id.toString()
+                              ,authController.user!.uid.toString());
                         },
                       ),
                     ],
