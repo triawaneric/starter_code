@@ -30,6 +30,18 @@ class HomeScreen extends StatelessWidget {
           const SizedBox(
             width: 10,
           ),
+
+          IconButton(
+              onPressed: (){
+                //Logout
+                authController.logout();
+
+              },
+              icon: Icon(Icons.exit_to_app)
+          ),
+          const SizedBox(
+            width: 10,
+          ),
         ],
       ),
       body:GetX<NoteController>(
