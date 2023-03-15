@@ -10,6 +10,8 @@ class NoteController extends GetxController {
   List<Note> get notes => noteList.value;
 
   RxBool isVisibleSubtitle = true.obs;
+  RxBool isVisibleAction = false.obs;
+  RxInt selectedIdx = (-1).obs;
 
   void showSubtitle() {
     isVisibleSubtitle.value = true;
@@ -17,6 +19,20 @@ class NoteController extends GetxController {
   void hideSubtitle() {
     isVisibleSubtitle.value = false;
   }
+
+  //Show Hide container listile by index
+  void showContainerByIndex(int idx) {
+    isVisibleAction.value = true;
+    selectedIdx.value = idx ;
+  }
+  void hideContainerByIndex(int idx) {
+    isVisibleAction.value = false;
+    selectedIdx.value = -1;
+
+  }
+
+
+
 
 
 

@@ -39,28 +39,30 @@ class HomeScreen extends StatelessWidget {
                 color: Colors.blueGrey,
               ),
               itemBuilder: (context, index) => ListTile(
-                trailing: Visibility(
-                  visible: false,
-                  child: SizedBox(
-                    width: 110.0,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.edit, color: Colors.blue),
-                          onPressed: () {},
+                trailing:Obx(()=> index == noteController.selectedIdx.value  ?   SizedBox(
+                  width: 110.0,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.edit, color: Colors.blue),
+                        onPressed: () {
+                        },
+                      ),
+                      IconButton(
+                        icon: const Icon(
+                          Icons.delete,
+                          color: Colors.blue,
                         ),
-                        IconButton(
-                          icon: const Icon(
-                            Icons.delete,
-                            color: Colors.blue,
-                          ),
-                          onPressed: () {},
-                        ),
-                      ],
-                    ),
+                        onPressed: () {
+                        },
+                      ),
+                    ],
                   ),
+                ): Visibility(visible: false,child: Container()),
                 ),
+
+
                 title: Text("${noteController.noteList.value[index].title}"),
                 subtitle: Obx(()=>Visibility(
                     visible: noteController.isVisibleSubtitle.value,
@@ -68,7 +70,13 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 onTap: () {},
-                onLongPress: () {},
+                onLongPress: () {
+                  if(noteController.isVisibleAction.isFalse){
+                    noteController.showContainerByIndex(index);
+                  }else{
+                    noteController.hideContainerByIndex(index);
+                  }
+                },
               ),
             );
           } else {
