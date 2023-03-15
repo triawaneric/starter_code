@@ -9,6 +9,15 @@ class NoteController extends GetxController {
   Rx<List<Note>> noteList = Rx<List<Note>>([]);
   List<Note> get notes => noteList.value;
 
+  RxBool isVisibleSubtitle = true.obs;
+
+  void showSubtitle() {
+    isVisibleSubtitle.value = true;
+  }
+  void hideSubtitle() {
+    isVisibleSubtitle.value = false;
+  }
+
 
 
   @override

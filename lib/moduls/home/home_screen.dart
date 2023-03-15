@@ -62,7 +62,11 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 title: Text("${noteController.noteList.value[index].title}"),
-                subtitle:Text('${noteController.noteList.value[index].content}'),
+                subtitle: Obx(()=>Visibility(
+                    visible: noteController.isVisibleSubtitle.value,
+                    child: Text('${noteController.noteList.value[index].content}')
+                  ),
+                ),
                 onTap: () {},
                 onLongPress: () {},
               ),
@@ -78,10 +82,18 @@ class HomeScreen extends StatelessWidget {
         children: [
           FloatingActionButton(
               heroTag: UniqueKey(),
-              child: const Icon(Icons.menu),
+              child: Obx(()=>noteController.isVisibleSubtitle.value ? const Icon(Icons.unfold_less): const Icon(Icons.menu)),
               tooltip: 'Show less. Hide notes content',
-              onPressed: () {}),
-
+              onPressed: () {
+                if(noteController.isVisibleSubtitle.isFalse){
+                  noteController.showSubtitle();
+                  print("long press item show");
+                }else{
+                  noteController.hideSubtitle();
+                  print("long press item hide");
+                }
+              }
+          ),
           /* Notes: for the "Show More" icon use: Icons.menu */
 
           FloatingActionButton(
